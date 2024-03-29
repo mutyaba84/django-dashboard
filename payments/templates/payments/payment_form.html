@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment Form</title>
+    <!-- Include Stripe.js -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+      /* Add your custom CSS styles here */
+    </style>
+  </head>
+  <body>
+    <h1>Payment Form</h1>
+    <form id="payment-form">
+      <!-- Display validation errors -->
+      <div id="payment-errors"></div>
+
+      <!-- Card number input field -->
+      <label for="card-number">Card Number:</label>
+      <div id="card-number" class="field"></div>
+
+      <!-- Expiry date input field -->
+      <label for="card-expiry">Expiry Date:</label>
+      <div id="card-expiry" class="field"></div>
+
+      <!-- CVC input field -->
+      <label for="card-cvc">CVC:</label>
+      <div id="card-cvc" class="field"></div>
+
+      <!-- Submit button -->
+      <button type="submit">Submit Payment</button>
+    </form>
+
+    <script>
+      // Create a Stripe instance
+      var stripe = Stripe("YOUR_PUBLIC_KEY");
+
+      // Create an instance of Elements
+      var elements = stripe.elements();
+
+      // Create card element instances
+      var cardNumber = elements.create("cardNumber");
+      cardNumber.mount("#card-number");
+
+      var cardExpiry = elements.create("cardExpiry");
+      cardExpiry.mount("#card-expiry");
+
+      var cardCvc = elements.create("cardCvc");
+      cardCvc.mount("#card-cvc");
+
+      // Handle form submission
+      var form = document.getElementById("payment-form");
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        // Disable the submit button to prevent multiple submissions
+        form.querySelector("button").disabled = true;
+
+        // Display loading indicator
+        document.getElementById("payment-errors").innerText =
+          "Processing payment...";
+
+        // Create token with card details
+        stripe.createToken(cardNumber).then(function (result) {
+          if (result.error) {
+            // Display error message if card validation fails
+            document.getElementById("payment-errors").innerText =
+              result.error.message;
+            // Re-enable the submit button
+            form.querySelector("button").disabled = false;
+          } else {
+            // Token created successfully, send token to server for payment processing
+            // Replace 'YOUR_SERVER_ENDPOINT' with the URL of your server-side endpoint
+            fetch("YOUR_SERVER_ENDPOINT", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                token: result.token.id,
+              }),
+            })
+              .then(function (response) {
+                return response.json();
+              })
+              .then(function (data) {
+                // Handle response from server
+                if (data.success) {
+                  // Payment successful, redirect or show success message
+                  document.getElementById("payment-errors").innerText =
+                    "Payment successful!";
+                } else {
+                  // Payment failed, display error message
+                  document.getElementById("payment-errors").innerText =
+                    data.error;
+                }
+              });
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

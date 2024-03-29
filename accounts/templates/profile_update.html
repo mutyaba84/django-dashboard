@@ -1,0 +1,90 @@
+<!-- profile_update.html -->
+
+<div class="container-fluid py-2">
+  {% extends 'layouts/base.html' %} {% block content %}
+  <h2>Update Profile</h2>
+  <div>
+   
+    {% if current_information.profile_picture %}
+    <img
+      src="{{ current_information.profile_picture }}"
+      alt="Profile Picture"
+    />
+    {% else %}
+    <p>No profile picture</p>
+    {% endif %}
+  </div>
+  <form>
+    <div class="form-group">
+      <label for="example-text-input" class="form-control-label"
+        >Username</label
+      >
+      <input
+        class="form-control"
+        type="Username"
+        value="{{ current_information.username }}"
+        id="example-text-input"
+      />
+    </div>
+   
+    <div class="form-group">
+      <label for="example-email-input" class="form-control-label">Email</label>
+      <input
+        class="form-control"
+        type="email"
+        value="{{ current_information.email }}"
+        id="example-email-input"
+      />
+    </div>
+    <div class="form-group">
+      <label for="example-url-input" class="form-control-label">URL</label>
+      <input class="form-control" type="url" value="" id="example-url-input" />
+    </div>
+    <div class="form-group">
+      <label for="example-tel-input" class="form-control-label">Bio</label>
+      <input
+        class="form-control"
+        type="Bio"
+        value="bio"
+        id="example-bio-input"
+      />
+    </div>
+    <div class="form-group">
+      <label for="example-password-input" class="form-control-label"
+        >Password</label
+      >
+      <input
+        class="form-control"
+        type="password"
+        value="password"
+        id="example-password-input"
+      />
+    </div>
+    <div class="form-group">
+      <label for="example-number-input" class="form-control-label"
+        >Number</label
+      >
+      <input
+        class="form-control"
+        type="number"
+        value="23"
+        id="example-number-input"
+      />
+    </div>
+    <div class="form-group">
+      <label for="example-datetime-local-input" class="form-control-label"
+        >Datetime</label
+      >
+      <input
+        class="form-control"
+        type="datetime-local"
+        value="2018-11-23T10:30:00"
+        id="example-datetime-local-input"
+      />
+    </div>
+    
+    </div>
+  </form>
+  {% include "includes/footer.html" %} {% endblock %}
+</div>
+</div>
