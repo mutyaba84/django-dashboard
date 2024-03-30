@@ -1,0 +1,145 @@
+{% extends "layouts/base.html" %} {% block content %}
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-body px-0 pt-0 pb-2">
+          <div class="table-responsive p-0">
+            <table class="table align-items-center mb-0">
+              <div class="container">
+                <h2>Currency Converter</h2>
+                <form method="POST" id="currency-form">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <label for="amount">Amount:</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="amount"
+                      id="amount"
+                      min="0.01"
+                      step="0.01"
+                      required
+                      aria-label="Amount"
+                    />
+                    <small class="form-text text-muted">
+                      Enter the amount to convert.
+                    </small>
+                  </div>
+                  <div class="form-group">
+                    <label for="from_currency">From Currency:</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="from_currency"
+                      id="from_currency"
+                      required
+                      aria-label="From Currency"
+                    />
+                    <small class="form-text text-muted">
+                      Enter the currency code (e.g., USD).
+                    </small>
+                  </div>
+                  <div class="form-group">
+                    <label for="to_currency">To Currency:</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="to_currency"
+                      id="to_currency"
+                      required
+                      aria-label="To Currency"
+                    />
+                    <small class="form-text text-muted">
+                      Enter the currency code (e.g., EUR).
+                    </small>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Convert</button>
+                </form>
+                <div id="converted-amount"></div>
+                <h3>Conversion History</h3>
+                <ul class="list-group">
+                  {% for entry in history %}
+                  <li class="list-group-item">
+                    <strong>{{ entry.timestamp|date:"D, d M Y H:i:s" }}</strong>
+                    - Converted <strong>{{ entry.amount }}</strong> {{
+                    entry.from_currency }} to
+                    <strong>{{ entry.converted_amount }}</strong> {{
+                    entry.to_currency }}
+                  </li>
+                  {% empty %}
+                  <li class="list-group-item">
+                    No conversion history available.
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% include "includes/footer.html" %}
+</div>
+
+<!-- JavaScript for fetching currency data -->
+<script>
+    // Function to fetch currency data from API
+    function fetchCurrencyData(currencyCode, symbolElementId, flagElementId) {
+      fetch(`https://restcountries.com/v3/alpha/${currencyCode}`)
+        .then((response) => response.json())
+        .then((data) => {
+          const currencySymbol = data[0]?.currencies[0]?.symbol;
+          const countryFlag = data[0]?.flags[0];
+          document.getElementById(symbolElementId).innerText =
+            currencySymbol || "";
+          document.getElementById(flagElementId).src = countryFlag || "";
+        })
+        .catch((error) => {
+          console.error("Error fetching currency data:", error);
+        });
+   document.addEventListener("DOMContentLoaded", () => {
+    const fromCurrencyCode = document.getElementById("from_currency").value;
+    const toCurrencyCode = document.getElementById("to_currency").value;
+
+    fetchCurrencyData(fromCurrencyCode, "from_currency_symbol", "from_currency_flag");
+    fetchCurrencyData(toCurrencyCode, "to_currency_symbol", "to_currency_flag");
+
+    // Attach event listener to the form for submission handling
+    const currencyForm = document.getElementById("currency-form");
+    currencyForm.addEventListener("submit", handleFormSubmit);
+  });
+
+  // Function to handle form submission
+  function handleFormSubmit(event) {
+    event.preventDefault(); // Prevent default form submission
+    const formData = new FormData(event.target); // Get form data
+    const url = event.target.action; // Get form action URL
+
+    fetch(url, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'X-CSRFToken': getCookie('csrftoken') // Add CSRF token header
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      // Process response data (e.g., display converted amount, handle errors)
+      console.log(data);
+    })
+    .catch(error => {
+      console.error("Error during form submission:", error);
+    });
+  }
+
+  // Function to fetch CSRF token from cookie
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
+</script>
+
+{% endblock %}

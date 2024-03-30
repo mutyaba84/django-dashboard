@@ -56,6 +56,11 @@ INSTALLED_APPS = [
     #'users',
     'accounts',
     'payments',
+    
+    'transfers',
+    #'converter',
+    'currency_converter',
+    'requests',
 ]
 
 MIDDLEWARE = [
