@@ -52,10 +52,11 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     "home",
-    'mobile_service_providers',
-    #'users',
+    'service_provider',
+    'users',
     'accounts',
     'payments',
+    'recipients',
     
     'transfers',
     #'converter',

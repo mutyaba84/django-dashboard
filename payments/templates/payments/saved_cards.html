@@ -1,0 +1,8 @@
+{% extends 'layouts/base.html' %} {% block content %}
+<h1>Saved Cards</h1>
+<ul>
+  {% for saved_card in saved_cards %}
+  <li>{{ saved_card }}</li>
+  {% endfor %}
+</ul>
+{% endblock %}

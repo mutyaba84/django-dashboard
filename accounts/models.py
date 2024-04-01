@@ -1,22 +1,20 @@
 from django.db import models
-
-# Create your models here.
-from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.conf import settings
 
+
 class User(AbstractUser):
     # Define your custom fields and methods here
-    
+
     class Meta:
         pass
 
     # Add custom related_name attributes to avoid clashes
     groups = models.ManyToManyField(
         'auth.Group',
-        related_name='%(class)s_related',
+        related_name='user_groups',
         verbose_name='groups',
         blank=True,
         help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.',
@@ -24,26 +22,20 @@ class User(AbstractUser):
     
     user_permissions = models.ManyToManyField(
         'auth.Permission',
-        related_name='%(class)s_related',
+        related_name='user_permissions',
         verbose_name='user permissions',
         blank=True,
         help_text='Specific permissions for this user.',
     )
 
+
+
 class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    bio = models.TextField(blank=True)
     profile_picture = models.ImageField(upload_to='profile_pics/', blank=True)
 
     def __str__(self):
         return self.user.username
-
-    def update_profile(self, bio=None, profile_picture=None):
-        if bio:
-            self.bio = bio
-        if profile_picture:
-            self.profile_picture = profile_picture
-        self.save()
 
     def update_profile_picture(self, profile_picture):
         self.profile_picture = profile_picture
@@ -53,9 +45,9 @@ class UserProfile(models.Model):
         return {
             'username': self.user.username,
             'email': self.user.email,
-            
-           
-            'bio': self.bio,
+            'first_name': self.user.first_name,
+            'last_name': self.user.last_name,
+            'address': self.user.address,
             'profile_picture': self.profile_picture.url if self.profile_picture else None
         }
 

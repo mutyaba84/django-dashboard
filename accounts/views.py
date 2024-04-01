@@ -1,4 +1,6 @@
-from django.shortcuts import render, redirect
+# views.py
+
+from django.shortcuts import redirect
 from django.views.generic import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import UserProfile

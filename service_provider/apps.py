@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class MobileServiceProvidersConfig(AppConfig):
+class service_providerConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'mobile_service_providers'
+    name = 'service_provider'
