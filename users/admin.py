@@ -1,10 +1,12 @@
 
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.models import User
+# admin.py
+from django.contrib import admin
+from .models import UserProfile
 
-class CustomUserAdmin(UserAdmin):
-    pass  # You can customize the user admin here if needed
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ['user', 'first_name', 'last_name', 'current_address', 'is_disabled']
+    list_filter = ['is_disabled']
+    search_fields = ['user__username', 'first_name', 'last_name']
 
-admin.site.unregister(User)  # Unregister the default User admin
-admin.site.register(User, CustomUserAdmin)  # Register the User model with your custom admin class
+admin.site.register(UserProfile, UserProfileAdmin)

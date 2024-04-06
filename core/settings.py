@@ -43,6 +43,7 @@ if RENDER_EXTERNAL_HOSTNAME:
 # Application definition
 
 INSTALLED_APPS = [
+    'email_notifications.apps.EmailNotificationsConfig',
     'admin_soft.apps.AdminSoftDashboardConfig',
     "django.contrib.admin",
     "django.contrib.auth",
@@ -52,7 +53,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     "home",
-    'service_provider',
+    'service_providers',
     'users',
     'accounts',
     'payments',

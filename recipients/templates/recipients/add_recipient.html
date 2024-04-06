@@ -1,0 +1,21 @@
+<!-- add_recipient.html -->
+{% extends "layouts/base.html" %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Recipient</title>
+  </head>
+  <body>
+    <h1>Add Recipient</h1>
+    <form method="post">
+      {% csrf_token %} {{ form.as_p }}
+      <button type="submit">Save</button>
+    </form>
+    {% if error %}
+    <p>{{ error }}</p>
+    {% endif %}
+  </body>
+</html>
+{% endblock %}

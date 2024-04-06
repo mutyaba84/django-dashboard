@@ -1,3 +1,4 @@
+#payments views.py
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import PaymentMethod, Transaction, SavedCard
@@ -16,7 +17,7 @@ def add_payment_method(request):
             return redirect('payment_methods')  # Assuming you have a URL named 'payment_methods' to redirect to
     else:
         form = PaymentMethodForm()
-    return render(request, 'add_payment_method.html', {'form': form})
+    return render(request, 'payments/add_payment_method.html', {'form': form})
 
 @login_required
 def add_transaction(request):
@@ -29,7 +30,7 @@ def add_transaction(request):
             return redirect('transactions')  # Assuming you have a URL named 'transactions' to redirect to
     else:
         form = TransactionForm()
-    return render(request, 'add_transaction.html', {'form': form})
+    return render(request, 'payments/add_transaction.html', {'form': form})
 
 @login_required
 def add_saved_card(request):
@@ -39,10 +40,10 @@ def add_saved_card(request):
             saved_card = form.save(commit=False)
             saved_card.user = request.user
             saved_card.save()
-            return redirect('saved_cards')  # Assuming you have a URL named 'saved_cards' to redirect to
+            return redirect('payments/saved_cards')  # Assuming you have a URL named 'saved_cards' to redirect to
     else:
         form = SavedCardForm()
-    return render(request, 'add_saved_card.html', {'form': form})
+    return render(request, 'payments/add_saved_card.html', {'form': form})
 
 
 @login_required
@@ -52,11 +53,11 @@ def edit_saved_card(request, card_id):
         form = SavedCardForm(request.POST, instance=saved_card)
         if form.is_valid():
             form.save()
-            return redirect('saved_cards')
+            return redirect('payments/saved_cards')
     else:
         form = SavedCardForm(instance=saved_card)
-    return render(request, 'edit_saved_card.html', {'form': form})
+    return render(request, 'payments/edit_saved_card.html', {'form': form})
 
 def saved_cards(request):
     saved_cards = SavedCard.objects.all()  # Retrieve all saved cards from the database
-    return render(request, 'saved_cards.html', {'saved_cards': saved_cards})
+    return render(request, 'payments/saved_cards.html', {'saved_cards': saved_cards})

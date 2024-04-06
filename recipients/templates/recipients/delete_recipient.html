@@ -1,0 +1,18 @@
+{% extends "layouts/base.html" %} {% block content %}
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-body px-0 pt-0 pb-2">
+          <h2>Delete Recipient</h2>
+          <p>Are you sure you want to delete recipient {{ recipient.name }}?</p>
+          <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

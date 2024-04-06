@@ -1,0 +1,21 @@
+{% extends "layouts/base.html" %} {% block content %}
+
+<h1>Recipient List</h1>
+<ul>
+  {% for recipient in recipients %}
+  <li>
+    {{ recipient.first_name }} {{ recipient.last_name }} - {{
+    recipient.mobile_number }}
+    <ul>
+      <li><a href="{% url 'edit_recipients.html' recipient.pk %}">Edit</a></li>
+      <li><a href="{% url 'delete_recipient' recipient.pk %}">Delete</a></li>
+      <li>
+        <a href="{% url 'transfer_money' recipient.pk %}">Transfer Money</a>
+      </li>
+    </ul>
+  </li>
+  {% endfor %}
+</ul>
+<a href="{% url 'add_recipient.html' %}">Add Recipient</a>
+
+{% endblock %}

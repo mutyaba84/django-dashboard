@@ -1,0 +1,24 @@
+<!-- recipient_detail.html -->
+{% extends "layouts/base.html" %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recipient Detail</title>
+  </head>
+  <body>
+    <h1>Recipient Detail</h1>
+    <p>
+      <strong>Name:</strong> {{ recipient.first_name }} {{ recipient.last_name
+      }}
+    </p>
+    <p><strong>Mobile Number:</strong> {{ recipient.mobile_number }}</p>
+    <!-- Include other recipient details as needed -->
+    <a href="{% url 'edit_recipient' recipient.pk %}">Edit</a>
+    <a href="{% url 'edit_recipient' recipient.pk %}">Edit</a>
+
+    <a href="{% url 'delete_recipient' recipient.pk %}">Delete</a>
+  </body>
+</html>
+{% endblock %}

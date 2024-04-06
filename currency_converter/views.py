@@ -1,12 +1,9 @@
-# Inside currency_converter/views.py
-import os
-import requests
+from django.shortcuts import render, redirect
 from django.contrib import messages
-
-from django.shortcuts import render
-from django.http import JsonResponse
 from .models import ConversionHistory
 from django.contrib.auth.decorators import login_required
+import os
+import requests
 
 @login_required
 def convert_currency(request):
@@ -36,6 +33,9 @@ def convert_currency(request):
                         converted_amount=conversion_result['converted_amount']
                     )
                     messages.success(request, 'Conversion successful.')
+                    # Add conversion result to the context
+                    context = {'conversion_result': conversion_result['converted_amount']}
+                    return render(request, 'currency_converter/convert_currency.html', context)
                 except Exception as e:
                     # Log the exception for debugging
                     print("Error saving conversion history:", e)
@@ -80,7 +80,6 @@ def perform_currency_conversion(amount, from_currency, to_currency):
             return {'error': 'Invalid currency code or conversion rate not available.'}
     else:
         return {'error': 'Failed to fetch exchange rates. Please try again later.'}
-
 
 @login_required
 def conversion_history(request):

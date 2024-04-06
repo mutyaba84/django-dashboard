@@ -15,22 +15,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from accounts.views import UserProfileUpdateView
+
 from currency_converter.views import convert_currency, conversion_history
 from users import views as user_views
+from recipients import views
 
 urlpatterns = [
     path('', include('home.urls')),
     path("admin/", admin.site.urls),
     path("", include('admin_soft.urls')),
-    path('register/', user_views.register, name='register'),
-    
+   # path('register/', user_views.register, name='register'),
+    path('', include('users.urls')),
     path('transfers/', include('transfers.urls')),
     path('currency/', include('currency_converter.urls')),
     path('payments/', include('payments.urls')),
-    
-
-    path('profile/update/', UserProfileUpdateView.as_view(), name='profile_update'),
+    path('recipients/', include('recipients.urls')),
+    path('service-providers/', include('service_providers.urls')),# Include app URLs here
+    path('', include('email_notifications.urls'))
+   # path('profile/update/', UserProfileUpdateView.as_view(), name='profile_update'),
 ]
 
 

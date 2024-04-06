@@ -1,4 +1,4 @@
-# mobile_service_providers/views.py
+# service_providers/views.py
 from django.shortcuts import render
 from django.http import JsonResponse
 import requests
@@ -19,7 +19,7 @@ def transfer_to_mtn(request):
         else:
             return JsonResponse({'error': 'Failed to transfer money to MTN'})
 
-    return render(request, 'mobile_service_providers/transfer_to_mtn.html')
+    return render(request, 'service_providers/transfer_to_mtn.html')
 
 def transfer_to_airtel(request):
     # Logic to handle money transfer to Airtel
@@ -37,4 +37,4 @@ def transfer_to_airtel(request):
         else:
             return JsonResponse({'error': 'Failed to transfer money to Airtel'})
 
-    return render(request, 'mobile_service_providers/transfer_to_airtel.html')
+    return render(request, 'service_providers/transfer_to_airtel.html')
