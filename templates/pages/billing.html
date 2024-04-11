@@ -90,7 +90,9 @@
                   <h6 class="mb-0">Payment Method</h6>
                 </div>
                 <div class="col-6 text-end">
-                  <a class="btn bg-gradient-dark mb-0" href="javascript:;"
+                  <a
+                    class="btn bg-gradient-dark mb-0"
+                    href="{% url 'add_saved_card' %}"
                     ><i class="fas fa-plus"></i>&nbsp;&nbsp;Add New Card</a
                   >
                 </div>
@@ -130,12 +132,21 @@
                     <h6 class="mb-0">
                       ****&nbsp;&nbsp;&nbsp;****&nbsp;&nbsp;&nbsp;****&nbsp;&nbsp;&nbsp;5248
                     </h6>
-                    <i
-                      class="fas fa-pencil-alt ms-auto text-dark cursor-pointer"
+                    
+
+                    <a
+                      href="{% url 'edit_saved_card' %}"
                       data-bs-toggle="tooltip"
                       data-bs-placement="top"
                       title="Edit Card"
-                    ></i>
+                    >
+                      <i
+                      <i
+                        class="fas fa-pencil-alt ms-auto text-dark cursor-pointer"
+                      ></i></i>
+                    </a>
+
+                    >
                   </div>
                 </div>
               </div>

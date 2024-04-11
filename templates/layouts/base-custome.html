@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="{% static 'img/apple-icon.png' %}"
+    />
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}" />
+    <title>Syndqa- {% block title %}{% endblock %} | AppSeed</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Fonts and icons -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
+      rel="stylesheet"
+    />
+    <!-- Nucleo Icons -->
+    <link href="{% static 'css/nucleo-icons.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/nucleo-svg.css' %}" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <script
+      src="https://kit.fontawesome.com/42d5adcbca.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- CSS Files -->
+    <link
+      id="pagestyle"
+      href="{% static 'css/soft-ui-dashboard.css' %}"
+      rel="stylesheet"
+    />
+    <link
+      id="pagestyle_dark"
+      href="{% static 'css/dark-theme-core.css' %}"
+      rel="stylesheet"
+    />
+    <!-- Specific CSS goes HERE -->
+    <style>
+      /* Override the colors to make them darker */
+      :root {
+        --primary: #4f4f4f; /* Darker primary color */
+        --secondary: #6c757d; /* Darker secondary color */
+        /* Adjust other colors as needed */
+      }
+
+      /* Move authentication links to the right */
+      .navbar-nav {
+        margin-left: auto;
+      }
+
+      /* Style for the navbar brand */
+      .navbar-brand {
+        font-size: 1.5rem; /* Increase font size for brand */
+        font-weight: bold; /* Make brand bold */
+      }
+
+      /* Style for the search form */
+      .search-form {
+        display: flex; /* Use flexbox for layout */
+        align-items: center; /* Center items vertically */
+      }
+
+      /* Style for the search input */
+      .search-input {
+        border-radius: 20px; /* Round input corners */
+        padding: 8px 12px; /* Adjust padding */
+        margin-right: 10px; /* Add space between input and button */
+      }
+
+      /* Style for the search button */
+      .search-button {
+        border-radius: 20px; /* Round button corners */
+        padding: 8px 16px; /* Adjust padding */
+      }
+
+      /* Style for the content area */
+      .content {
+        padding-top: 80px; /* Add padding equal to navbar height plus extra space */
+      }
+
+      /* Add z-index to navbar */
+      .navbar {
+        z-index: 1000; /* Ensure navbar is on top */
+      }
+    </style>
+    {% block stylesheets %}{% endblock stylesheets %}
+  </head>
+  <body class="">
+    <!-- Fixed navbar -->
+    <nav
+      class="navbar navbar-expand-lg blur blur-rounded z-index-3 shadow position-fixed my-3 py-2 start-0 end-0 mx-4"
+    >
+      <div class="container-fluid pe-0">
+        <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3" href="/">
+          Soft UI Dashboard
+        </a>
+        <button
+          class="navbar-toggler shadow-none ms-2"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navigation"
+          aria-controls="navigation"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon mt-2">
+            <span class="navbar-toggler-bar bar1"></span>
+            <span class="navbar-toggler-bar bar2"></span>
+            <span class="navbar-toggler-bar bar3"></span>
+          </span>
+        </button>
+        <div class="collapse navbar-collapse" id="navigation">
+          <ul class="navbar-nav mx-auto ms-xl-auto">
+            <li class="nav-item">
+              <a
+                class="nav-link d-flex align-items-center me-2 active"
+                aria-current="page"
+                href="/"
+              >
+                <i class="fa fa-chart-pie opacity-6 me-1"></i>
+                Dashboard
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <label
+                for="theme-switch"
+                class="nav-link d-flex align-items-center me-2"
+              >
+                <i
+                  class="fa fa-sun cursor-pointer opacity-6 px-1"
+                  id="theme-indicator"
+                ></i>
+                Theme
+              </label>
+              <input type="checkbox" class="d-none" id="theme-switch" />
+            </li>
+          </ul>
+
+          <ul class="navbar-nav d-lg-block d-none">
+            <li class="nav-item">
+              <a
+                target="_blank"
+                href="https://appseed.us/product/soft-ui-dashboard/django/"
+                class="btn btn-sm btn-round mb-0 me-1 bg-gradient-dark"
+                >Download</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Content -->
+    <div class="container-fluid content">
+      <!-- Adjust the padding-top according to your fixed navbar height -->
+      {% block content %}{% endblock content %}
+    </div>
+
+    <!-- Include footer or other elements as needed -->
+
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <!-- Include scripts -->
+    {% include "includes/scripts.html" %}
+    <!-- Specific JS goes HERE -->
+    {% block scripts %}{% endblock scripts %}
+    <script>
+      var win = navigator.platform.indexOf("Win") > -1;
+      if (win && document.querySelector("sidenav-scrollbar")) {
+        var options = {
+          damping: "0.5",
+        };
+        Scrollbar.init(document.querySelector("sidenav-scrollbar"), options);
+      }
+    </script>
+    <!-- Github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="{% static 'js/soft-ui-dashboard.min.js' %}"></script>
+  </body>
+</html>

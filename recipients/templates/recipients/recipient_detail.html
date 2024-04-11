@@ -1,24 +1,49 @@
-<!-- recipient_detail.html -->
 {% extends "layouts/base.html" %} {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Recipient Detail</title>
-  </head>
-  <body>
-    <h1>Recipient Detail</h1>
-    <p>
-      <strong>Name:</strong> {{ recipient.first_name }} {{ recipient.last_name
-      }}
-    </p>
-    <p><strong>Mobile Number:</strong> {{ recipient.mobile_number }}</p>
-    <!-- Include other recipient details as needed -->
-    <a href="{% url 'edit_recipient' recipient.pk %}">Edit</a>
-    <a href="{% url 'edit_recipient' recipient.pk %}">Edit</a>
-
-    <a href="{% url 'delete_recipient' recipient.pk %}">Delete</a>
-  </body>
-</html>
-{% endblock %}
+<div class="container-fluid py-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h1 class="mb-4">Recipient Detail</h1>
+          <div class="recipient-details">
+            <div class="row">
+              <div class="col-md-6">
+                <p><strong>First Name:</strong> {{ recipient.first_name }}</p>
+                <p><strong>Last Name:</strong> {{ recipient.last_name }}</p>
+                <p>
+                  <strong>Mobile Number:</strong> {{ recipient.mobile_number }}
+                </p>
+              </div>
+              <div class="col-md-6">
+                <p>
+                  <strong>Mobile Money Account:</strong> {{
+                  recipient.mobile_money_account }}
+                </p>
+                <!-- Add other recipient details here -->
+              </div>
+            </div>
+          </div>
+          <!-- Buttons for edit, delete, and transfer money -->
+          <div class="mt-4">
+            <a
+              href="{% url 'edit_recipient' recipient.pk %}"
+              class="btn btn-primary"
+              >Edit</a
+            >
+            <a
+              href="{% url 'delete_recipient' recipient.pk %}"
+              class="btn btn-danger ms-2"
+              >Delete</a
+            >
+            <a
+              href="{% url 'transfer_money' recipient.pk %}"
+              class="btn btn-success ms-2"
+              >Transfer Money</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% include "includes/footer.html" %} {% endblock %}

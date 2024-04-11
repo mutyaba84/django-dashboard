@@ -1,78 +1,41 @@
 {% extends "layouts/base.html" %} {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Conversion History</title>
-    <style>
-      html,
-      body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-
-      .wrapper {
-        min-height: 100%;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .content {
-        flex: 1;
-      }
-
-      .footer {
-        background-color: #f8f9fa;
-        padding: 20px;
-        text-align: center;
-        width: 100%;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="wrapper">
-      <div class="container-fluid py-4 content">
-        <div class="row">
-          <div class="col-12">
-            <div class="card mb-4">
-              <div class="card-body px-0 pt-0 pb-2">
-                <div class="table-responsive">
-                  <table class="table align-items-center">
-                    <thead>
-                      <tr>
-                        <th>Date</th>
-                        <th>Amount</th>
-                        <th>From Currency</th>
-                        <th>To Currency</th>
-                        <th>Converted Amount</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {% for entry in history %}
-                      <tr>
-                        <td>{{ entry.timestamp|date:"D, d M Y H:i:s" }}</td>
-                        <td>{{ entry.amount }}</td>
-                        <td>{{ entry.from_currency }}</td>
-                        <td>{{ entry.to_currency }}</td>
-                        <td>{{ entry.converted_amount }}</td>
-                      </tr>
-                      {% empty %}
-                      <tr>
-                        <td colspan="5">No conversion history available.</td>
-                      </tr>
-                      {% endfor %}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h1>Conversion History</h1>
+          <div class="table-responsive">
+            <table class="table align-middle">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th>From Currency</th>
+                  <th>To Currency</th>
+                  <th>Converted Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for entry in history %}
+                <tr>
+                  <td>{{ entry.timestamp|date:"D, d M Y H:i:s" }}</td>
+                  <td>{{ entry.amount }}</td>
+                  <td>{{ entry.from_currency }}</td>
+                  <td>{{ entry.to_currency }}</td>
+                  <td>{{ entry.converted_amount }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="5">No conversion history available.</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-      <div class="footer">{% include "includes/footer.html" %}</div>
     </div>
-  </body>
-</html>
-{% endblock %}
+  </div>
+</div>
+{% include "includes/footer.html" %} {% endblock %}

@@ -1,0 +1,195 @@
+{% extends "layouts/base-custome.html" %} {% block content %}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+      <div class="card">
+        <div class="card-body">
+          <!DOCTYPE html>
+          <html lang="en">
+            <head>
+              <meta charset="UTF-8" />
+              <meta
+                name="viewport"
+                content="width=device-width, initial-scale=1.0"
+              />
+              <title>Money Converter</title>
+              <style>
+                .container {
+                  padding: 20px;
+                  background-color: #f8f9fa; /* Light gray background color */
+                  border-radius: 10px;
+                }
+                .input-group {
+                  margin-bottom: 20px; /* Increased margin for better separation */
+                }
+                .input-group label {
+                  display: block;
+                  margin-bottom: 5px;
+                  font-weight: bold; /* Make labels bold */
+                }
+                .input-group input,
+                .input-group select {
+                  width: 100%;
+                  padding: 10px; /* Reduced padding */
+                  border: 1px solid #ced4da; /* Gray border */
+                  border-radius: 5px;
+                }
+                .btn {
+                  padding: 10px 20px;
+                  background-color: #007bff;
+                  color: #fff;
+                  border: none;
+                  border-radius: 5px;
+                  cursor: pointer;
+                }
+                .result {
+                  margin-top: 20px; /* Increased margin for better separation */
+                  padding: 15px; /* Reduced padding */
+                  border-radius: 5px;
+                  font-size: 16px; /* Reduced font size */
+                }
+                .result.success {
+                  background-color: #d4edda; /* Light green background color */
+                  color: #155724; /* Dark green text color */
+                }
+                .result.error {
+                  background-color: #f8d7da; /* Light red background color */
+                  color: #721c24; /* Dark red text color */
+                }
+                /* Flags for currencies */
+                .flag-icon {
+                  width: 20px; /* Reduced flag size */
+                  height: 20px; /* Reduced flag size */
+                  margin-right: 5px;
+                }
+              </style>
+            </head>
+            <body>
+              <div class="container">
+                <h2
+                  style="
+                    font-size: 22px;
+                    margin-bottom: 20px;
+                    text-align: center;
+                  "
+                >
+                  Money Converter
+                </h2>
+                <!-- Reduced heading font size -->
+                <form>
+                  <div class="input-group">
+                    <label for="amount">Amount:</label>
+                    <input
+                      type="number"
+                      id="amount"
+                      class="form-control"
+                      placeholder="Enter amount"
+                      step="0.01"
+                      min="0"
+                    />
+                  </div>
+                  <div class="input-group">
+                    <label for="from">From:</label>
+                    <select id="from" class="form-select">
+                      <!-- Options will be populated dynamically -->
+                    </select>
+                  </div>
+                  <div class="input-group">
+                    <label for="to">To:</label>
+                    <select id="to" class="form-select">
+                      <!-- Options will be populated dynamically -->
+                    </select>
+                  </div>
+                  <div class="input-group">
+                    <button
+                      type="button"
+                      class="btn btn-primary btn-block"
+                      onclick="convert()"
+                    >
+                      Convert
+                    </button>
+                  </div>
+                </form>
+                <div class="result mt-4" id="result"></div>
+              </div>
+
+              <script>
+                // Fetching currency data and populating dropdowns
+                fetch("https://restcountries.com/v3.1/all")
+                  .then((response) => response.json())
+                  .then((data) => {
+                    const fromCurrencySelect = document.getElementById("from");
+                    const toCurrencySelect = document.getElementById("to");
+
+                    data.forEach((country) => {
+                      if (country.currencies) {
+                        for (const currencyCode in country.currencies) {
+                          const currency = country.currencies[currencyCode];
+                          const option = document.createElement("option");
+                          option.value = currencyCode;
+                          option.innerHTML = `${currency.symbol} ${currency.name}`;
+                          fromCurrencySelect.appendChild(
+                            option.cloneNode(true)
+                          );
+                          toCurrencySelect.appendChild(option);
+                        }
+                      }
+                    });
+                  })
+                  .catch((error) =>
+                    console.error("Error fetching currency data:", error)
+                  );
+
+                function convert() {
+                  var amount = parseFloat(
+                    document.getElementById("amount").value
+                  );
+                  var fromCurrency = document.getElementById("from").value;
+                  var toCurrency = document.getElementById("to").value;
+                  fetchExchangeRate(fromCurrency, toCurrency)
+                    .then((rate) => {
+                      var result = (amount * rate).toFixed(2);
+                      document.getElementById("result").innerHTML =
+                        amount.toLocaleString() +
+                        " " +
+                        fromCurrency.split(" ")[0] + // Get currency symbol from option value
+                        " = " +
+                        `<span class="result success">${result.toLocaleString()} ${
+                          toCurrency.split(" ")[0]
+                        }</span>`; /* Result with green background */
+                    })
+                    .catch((error) => {
+                      console.error("Error fetching exchange rate:", error);
+                      document.getElementById(
+                        "result"
+                      ).innerHTML = `<span class="result error">Error fetching exchange rate. Please try again later.</span>`; /* Result with red background */
+                    });
+                }
+
+                async function fetchExchangeRate(fromCurrency, toCurrency) {
+                  const apiKey = "620b863906ab3a89bacda48b";
+                  const apiUrl = `https://open.er-api.com/v6/latest/${
+                    fromCurrency.split(" ")[0]
+                  }`; // Get currency code
+                  const response = await fetch(apiUrl + `?apikey=${apiKey}`);
+                  const data = await response.json();
+                  if (
+                    data &&
+                    data.rates &&
+                    data.rates[toCurrency.split(" ")[0]]
+                  ) {
+                    // Get currency code
+                    return data.rates[toCurrency.split(" ")[0]]; // Get currency code
+                  } else {
+                    throw new Error("Exchange rate data not available");
+                  }
+                }
+              </script>
+            </body>
+          </html>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,21 +1,49 @@
 {% extends "layouts/base.html" %} {% block content %}
-
-<h1>Recipient List</h1>
-<ul>
-  {% for recipient in recipients %}
-  <li>
-    {{ recipient.first_name }} {{ recipient.last_name }} - {{
-    recipient.mobile_number }}
-    <ul>
-      <li><a href="{% url 'edit_recipients.html' recipient.pk %}">Edit</a></li>
-      <li><a href="{% url 'delete_recipient' recipient.pk %}">Delete</a></li>
-      <li>
-        <a href="{% url 'transfer_money' recipient.pk %}">Transfer Money</a>
-      </li>
-    </ul>
-  </li>
-  {% endfor %}
-</ul>
-<a href="{% url 'add_recipient.html' %}">Add Recipient</a>
-
-{% endblock %}
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-lg-8 mx-auto">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h1 class="mb-4">Recipient List</h1>
+          <div class="table-responsive">
+            <ul class="list-group">
+              {% for recipient in recipients %}
+              <li class="list-group-item">
+                <div>
+                  <span
+                    >{{ recipient.first_name }} {{ recipient.last_name }}</span
+                  >
+                  <span class="ml-3">{{ recipient.mobile_number }}</span>
+                </div>
+                <div>
+                  <a
+                    href="{% url 'edit_recipient' recipient.pk %}"
+                    class="btn btn-primary btn-sm"
+                    >Edit</a
+                  >
+                  <a
+                    href="{% url 'delete_recipient' recipient.pk %}"
+                    class="btn btn-danger btn-sm ml-2"
+                    >Delete</a
+                  >
+                  <a
+                    href="{% url 'transfer_money' recipient.pk %}"
+                    class="btn btn-success btn-sm ml-2"
+                    >Transfer Money</a
+                  >
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="mt-4">
+            <a href="{% url 'add_recipient' %}" class="btn btn-primary"
+              >Add Recipient</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% include "includes/footer.html" %} {% endblock %}

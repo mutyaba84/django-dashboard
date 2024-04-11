@@ -1,8 +1,18 @@
 {% extends 'layouts/base.html' %} {% block content %}
-<h1>Saved Cards</h1>
-<ul>
-  {% for saved_card in saved_cards %}
-  <li>{{ saved_card }}</li>
-  {% endfor %}
-</ul>
+<div class="container-fluid py-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="card shadow">
+        <div class="card-body">
+          <h1 class="mb-4">Saved Cards</h1>
+          <ul class="list-group">
+            {% for saved_card in saved_cards %}
+            <li class="list-group-item">{{ saved_card }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

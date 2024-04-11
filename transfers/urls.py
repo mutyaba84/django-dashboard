@@ -4,6 +4,6 @@ from . import views
 app_name = 'transfers'
 
 urlpatterns = [
-    path('', views.initiate_transfer, name='initiate_transfer'),
+     path('transfers/', views.initiate_transfer, name='transfer'),
     # Add more URL patterns as needed
 ]

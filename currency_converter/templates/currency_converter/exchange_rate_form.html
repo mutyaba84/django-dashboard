@@ -1,0 +1,25 @@
+{% extends "layouts/base-custome.html" %} {% block content %}
+
+<!-- exchange_rate_form.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Exchange Rate Form</title>
+  </head>
+  <body>
+    <h1>Exchange Rate Form</h1>
+
+    <form method="post">
+      {% csrf_token %} {{ form.as_p }}
+      <button type="submit">Convert</button>
+    </form>
+
+    {% if converted_amount is not None %}
+    <p>Converted Amount: {{ converted_amount }}</p>
+    {% endif %}
+  </body>
+</html>
+
+{% endblock %}

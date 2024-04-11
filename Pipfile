@@ -10,7 +10,13 @@ str2bool = "==1.1"
 django-admin-soft-dashboard = "==1.0.12"
 whitenoise = "==6.6.0"
 gunicorn = "==21.2.0"
-pillow = "*"
+pillow = "==10.2.0"
+asgiref = "==3.8.1"
+djangorestframework = "==3.15.1"
+sqlparse = "==0.4.4"
+typing-extensions = "==4.10.0"
+tzdata = "==2024.1"
+rabbitmq = "*"
 
 [dev-packages]
 
